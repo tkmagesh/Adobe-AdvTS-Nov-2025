@@ -26,3 +26,19 @@ namespace ObjectWorld {
     let id = p1["id"]
 }
 
+
+namespace MappedTypeUtilities {
+
+    // required -> Partial
+    type Product = { id: number, name: string, cost: number }
+    type PartialProduct = Partial<Product>
+
+    // Partial -> required
+    type NewProduct = Required<PartialProduct>
+
+    // Pick (create a new type using the given key(s))
+    type ProductDTO_1 = Pick<Product, "name" | "cost">
+
+    // Omit (create a new type omittig the given key(s))
+    type ProductDTO_2 = Omit<Product, "id">
+}
