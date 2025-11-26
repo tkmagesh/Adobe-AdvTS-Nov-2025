@@ -46,3 +46,14 @@ function f2(...args: FArgs){
 
 }
 
+/* Arrays */
+
+type SomeArray = string[]
+
+type ArrayValue = SomeArray[number]
+
+type IndiaPhone = [9, ...number[]]
+
+let myPhoneNo : IndiaPhone = [9,4,6,2,8,2]
+
+
