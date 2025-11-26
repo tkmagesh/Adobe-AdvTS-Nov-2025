@@ -126,3 +126,29 @@ Employee => {
 */
 ```
 
+#### Never
+- Never is used to represent an 'empty set'
+
+**A | never => A**
+
+**A & never => never**
+
+#### Unknown
+- Super set of ALL the types
+
+```typescript
+function f1(x : unknown){
+    if (typeof x === 'number'){
+        let y = x * 2
+    }
+    if (typeof x === 'string'){
+        let z = x.length
+    }
+    
+}
+
+f1(100)
+f1("abc")
+f1(true)
+```
+
