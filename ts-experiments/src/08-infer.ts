@@ -1,4 +1,5 @@
 import { Expect, Equal } from "type-testing";
+
 namespace infer_demo {
    
     type User = {
@@ -41,4 +42,18 @@ namespace infer_demo {
     type AddFn = (x : number, y : number) => number
 
     type AddParams = Parameters<AddFn> 
+    type T8 = Expect<Equal<AddParams, [x:number, y:number]>>
+
+    // simulating builtin "Parameters" utility type
+    type FuncParameters<T extends (...args : any) => any> = T extends (...args : infer P) => any ? P : never
+    type T9 = FuncParameters<AddFn>
+
+    // simulating builtin "ReturnType" utility type
+    type FuncReturnType<T extends (...args :any ) => any> = T extends (...args : any) => infer R ? R : never;
+    type T10 = FuncReturnType<AddFn>
+
+    type ConcactFn = (s1 : string, s2 : string) => string
+    type T11 = FuncReturnType<ConcactFn>
+
+
 }
