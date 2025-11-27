@@ -87,5 +87,18 @@ namespace filter_demo {
             : OnlyNumbers<Rest>
         : []
 
-    type t = Expect<Equal<Numbers, [1,3,5]>>
+    type t1 = Expect<Equal<Numbers, [1,3,5]>>
+
+    // Generic version of "OnlyNumbers"
+    type Filter<List, U> = List extends [infer First, ...infer Rest]
+        ? First extends U
+        ? [First, ...Filter<Rest, U>]
+        : Filter<Rest, U>
+        : []
+
+    type Strings = Filter<[1, 3, "magesh", true, 5], string>
+    type t2 = Expect<Equal<Strings, ["magesh"]>>
+
+    type Booleans = Filter<[1, 3, "magesh", true, 5], boolean>
+    type t3 = Expect<Equal<Booleans, [true]>>
 }
