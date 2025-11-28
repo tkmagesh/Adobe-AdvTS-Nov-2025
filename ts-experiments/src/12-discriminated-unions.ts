@@ -42,3 +42,38 @@ function handleResponse(response : ApiResponse) {
         // console.log(response.data.userId)
     }
 }
+
+// Nested Disciminated Unions
+
+// discriminant = "kind"
+type Payment = 
+    | { kind : "payment-success"; trasactionId : string}
+    | { kind : "payment-failure"; reason : string}
+
+type Fulfillment = 
+    | { kind : "fulfillment-success"; trackingId : string}
+    | { kind : "fulfillment-failure"; error : string}
+
+// discriminant = "step"
+type Order = 
+    | { step : "created" }
+    | { step : "paid";  payment : Payment }
+    | { step : "fulfilled"; fulfilment : Fulfillment}
+
+function processOrder(order: Order) {
+    switch (order.step) {
+        case "paid":
+            if (order.payment.kind === "payment-success"){
+                console.log("Paid, tx :", order.payment.trasactionId)
+            } else {
+                console.log("Payment failed :", order.payment.reason)
+            }
+            break;
+        case "fulfilled":
+            if (order.fulfilment.kind === "fulfillment-success"){
+                console.log("Shippled :", order.fulfilment.trackingId)
+            }
+        default:
+            break;
+    }
+}
