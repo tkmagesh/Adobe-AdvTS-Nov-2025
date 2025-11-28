@@ -77,3 +77,31 @@ function processOrder(order: Order) {
             break;
     }
 }
+
+// Using type utilities with discriminated unions
+/* UI Event Type System */
+namespace UIEvent {
+
+    type Event = 
+        | { type : "click" ; x : number; y : number}
+        | { type : "keypress" ; key : string}
+        | { type : "resize" ; width : number, height : number}
+    
+    // Filtering
+    type ClickEvent = Extract<Event, {type : "click"}>
+
+    // Filtering
+    type NonKeyEvents = Exclude<Event, {type : "keypress"}>
+
+    // Union of all discriminants
+    type EventType = Event["type"]
+
+    // create event handler types
+    type EventHandler<E extends Event> = (e : Event) => void
+
+    type Handlers = {
+        [T in Event["type"]] : EventHandler<Extract<Event, {type : T}>>
+    }
+
+}
+
